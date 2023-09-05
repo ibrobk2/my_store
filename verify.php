@@ -15,11 +15,17 @@ if(isset($_GET['token'])){
         $result = mysqli_query($conn, $query);
 
         if($result){
-            echo "Email Verified successfully";
+            echo "<script>
+                swal('Success', 'Email Verified successfully', 'success').then(function(result){if(result){window.location='login.php'}})
+            </script>";
         }
     }else{
-        $msg = "Invalid Token Entered";
-        header("Location: verify_token.php?message=$msg");
+        // $msg = "Invalid Token Entered";
+        // header("Location: verify_token.php?message=$msg");
+        echo "<script>
+        swal('Something Wrong', 'Invalid OTP Token entered', 'error').then(function(result){if(result){window.location='verify_token.php'}})
+    </script>";
+
 
     }
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="static/sweetalert/dist/sweetalert.min.js"></script>
 
     <title>Login Page</title>
     <style>
@@ -49,6 +50,45 @@
 <?php
 include "server.php";
 
+if(isset($_POST['btn_login'])){
+    $username = $_POST['username'];
+    $pass = md5($_POST['pass']);
 
+    $sql = "SELECT * FROM users WHERE username='$username' AND password='$pass' LIMIT 1";
+    $result = mysqli_query($conn, $sql);
+
+    if(mysqli_num_rows($result)==1){
+        session_start();
+        $_SESSION['logged'] = $username;
+        // header("location: dashboard.php?login=success");
+        echo "
+        <script>
+            swal('Done','Login Successful...', 'success')
+            .then(function(result){
+                if (true) {
+                    window.location = 'dashboard.php';
+                }
+            })
+          
+         
+        </script>
+    ";
+    }else{
+        echo "
+        <script>
+            swal('Error','Invalid Username or Password.', 'info')
+            .then(function(result){
+                if (true) {
+                    window.location = 'login.php';
+                }
+            })
+          
+         
+        </script>
+    ";
+
+}
+
+}
 
 ?>

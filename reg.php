@@ -1,3 +1,20 @@
+<?php
+$full_name = "";
+$username = "";
+$email = "";
+$gender = "";
+$state = "";
+$password = "";
+$cpassword = "";
+$token = "";
+
+
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,19 +33,32 @@
 <body>
     <div class="container">
     <h2 class="text-center text-primary">Registration Form</h2>
+    <?php 
+    if(count($errors)>0){
+
+?>
+    <div class="alert alert-danger">
+        <?php 
+        foreach($errors as $err){
+
+?>
+    <li><?php echo $err; ?></li>
+    <?php } ?>
+    </div>
+    <?php } ?>
     <form action="reg.php" class="form" method="post">
         <div class="form-group">
             <label for="fullname">Full Name</label>
-            <input type="text" class="form-control" name="fullname">
+            <input type="text" class="form-control" name="fullname" value="<?php echo $full_name; ?>">
         </div>
 
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" name="username">
+            <input type="text" class="form-control" name="username" value="<?php echo $username; ?>">
         </div>  
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="text" class="form-control" name="email">
+            <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
         </div>  
 
         <div class="form-group">
@@ -50,14 +80,14 @@
         
         <div class="form-group">
             <label for="pass">Password</label>
-            <input type="password" class="form-control" name="pass">
+            <input type="password" class="form-control" name="pass" value="<?php echo $password; ?>">
         </div>  
         
       
         
         <div class="form-group">
             <label for="cpass">Confirm Password</label>
-            <input type="password" class="form-control" name="cpass">
+            <input type="password" class="form-control" name="cpass" value="<?php echo $cpassword; ?>">
         </div> 
         
         <div class="form-group">
@@ -82,6 +112,9 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 include "server.php";
 
+
+
+
 if(isset($_POST['btn_reg'])){
     //variables
     $full_name = $_POST['fullname'];
@@ -94,9 +127,43 @@ if(isset($_POST['btn_reg'])){
     $token = substr(time()*rand(),1,6);
 
     if($password!=$cpassword){
-        echo "Invalid Username/Password";
-        die();
-    }else{
+       array_push($errors, "Passwords Mismatched");
+    }
+    
+    if(empty($full_name)){
+        array_push($errors, "Full Name Required");
+     }
+
+     if(empty($username)){
+        array_push($errors, "Username Required");
+     }
+     if(empty($email)){
+        array_push($errors, "Email Required");
+     }
+
+     if(empty($password)){
+        array_push($errors, "Password Required");
+     }
+
+     if(empty($cpassword)){
+        array_push($errors, "Confirm Password Required");
+     }
+
+
+     $sql = "SELECT * FROM users WHERE username='$username'  OR email='$email'";
+     $res = mysqli_query($conn, $sql);
+
+     if(mysqli_num_rows($res)>0){
+        // $row = mysqli_fetch_assoc($res);
+        array_push($errors, "User Already Exists");
+
+     }
+
+     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        array_push($errors, "Invalid Email Address");
+     }
+
+  if(count($errors)===0){
         $password = md5($password);
     $sql = "INSERT INTO users (`full_name`, `username`, `email`, `gender`, `state`, `password`, `token`) VALUES ('$full_name', '$username', '$email', '$gender', '$state', '$password', '$token')";
     $result = mysqli_query($conn, $sql);
@@ -124,7 +191,7 @@ if(isset($_POST['btn_reg'])){
          //Set gmail username
          $mail->Username = "ibrobk@gmail.com";
          //Set gmail password
-         $mail->Password = "";
+         $mail->Password = "ivmglzbgilvyejqm";
          //Email subject
          $mail->Subject = $subject;
          //Set sender email
@@ -158,7 +225,7 @@ if(isset($_POST['btn_reg'])){
                  swal('Error','OTP could not be sent to email.', 'error')
                  .then(function(result){
                      if (true) {
-                         window.location = './signup.php';
+                         window.location = './reg.php';
                      }
                  })
                
