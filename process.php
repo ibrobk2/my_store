@@ -35,13 +35,14 @@ if(isset($_POST['add_product_btn'])){
     $qty = $_POST['qty'];
     $price = $_POST['price'];
     $img = $_FILES['image'];
+    $description = $_POST['description'];
 
     $image_name = $img['name'];
     $image_type = $img['type'];
     $image_size = $img['size'];
     $image_tmp = $img['tmp_name'];
 
-    $sql = "INSERT INTO product (`product_name`, `category`, `quantity`, `price`, `image_url`) VALUES ('$product', '$category', $qty, $price, '$image_name')";
+    $sql = "INSERT INTO product (`product_name`, `category`, `quantity`, `price`, `image_url`, `description`) VALUES ('$product', '$category', $qty, $price, '$image_name', '$description')";
     $result = mysqli_query($conn, $sql);
 
     if($result){

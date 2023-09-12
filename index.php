@@ -1,38 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Maleenaf  Boutique & Clothing</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
-    <link rel="stylesheet" type="text/css" href="index.css">
-    <!-- Optional Bootstrap styling -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <header>
-        <h1 class="text-center">Maleenaf Boutique & Clothing</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Clothes</a></li>
-                <li><a href="#">Sunglasses</a></li>
-                <li><a href="#">Wrist Watches</a></li>
-                <li><a href="#">Shoes</a></li>
-            </ul>
-        </nav>
-    </header>
+<?php
+include "header.php";
 
+
+
+?>
     <div class="carousel">
         <img class="carousel-img" src="img/slide1.jpg">
         <div class="carousel-text">
-            <h2 style="margin-top: 120px; box-shadow: 1px 2px 1px 5px black; padding:5px;border-radius: 4px;" class="text-success">Welcome to M.Y. Boutique & Clothing</h2>
-            <p>Shop our latest collections of clothes, sunglasses, wrist watches, and shoes.</p>
+            <h2 style="margin-top: 120px; box-shadow: 1px 2px 1px 5px black; padding:5px;border-radius: 4px;" class="text-success">Welcome to ProxyMart</h2>
+            <p>Shop our latest collections of Computers, Spare Parts, Softwares, and Accessories.</p>
             <a href="#" class="btn">Shop Now</a>
+            <br><br><br>
         </div>
+        <br><br><br><br>
     </div>
 
     <main>
-        <h2>New Arrivals</h2>
+        <h2>Products</h2>
 
         <div class="product-grid">
             <?php
@@ -53,9 +37,9 @@
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo '<div class="product">';
                     echo '<img src="uploads/' . $row['image_url'] . '">';
-                    echo '<h3>' . $row['product_name'] . '</h3>';
-                    echo '<p class="price">&#8358;' . $row['price'] . '</p>';
-                    echo '<a href="#" class="btn btn-secondary">Add to Cart</a>';
+                    echo '<h3 class="text-primary">' . $row['product_name'] . '</h3>';
+                    echo '<p class="price text-danger">&#8358;' . number_format($row['price']) . '</p>';
+                    echo '<a href="view_product.php?id='.$row['id'].'" class="btn btn-secondary">View</a>';
                     echo '</div>';
                 }
 
@@ -65,9 +49,6 @@
         </div>
     </main>
 
-    <footer>
-        <p>&copy; 2023-<?php echo date("Y"); ?> Maleenaf Boutique & Clothing. All rights reserved.</p>
-    </footer>
 
     <!-- Optional Bootstrap JavaScript -->
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
@@ -85,5 +66,7 @@
             carouselText.classList.remove('animate__animated', 'animate__bounceInUp');
         });
     </script>
+
+<?php include "footer.php"; ?>
 </body>
 </html>

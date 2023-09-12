@@ -70,6 +70,13 @@
                 <input type="file" class="form-control" name="image" >
                
             </div>
+
+            <div class="form-group">
+                <label for="description">Product Description</label>
+                <textarea name="description" id="" cols="30" rows="5" class="form-control" value="<?php echo $description; ?>">
+
+                </textarea>
+            </div>
             <?php if($update==true): ?>
             <button class="btn btn-primary form-control mt-3" name="update_product_btn" >Update</button>
             <p class="text-center"><a href="manage_product.php">Back to Manage Product </a></p>
