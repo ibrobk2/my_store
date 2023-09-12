@@ -1,11 +1,13 @@
 <?php
+include "server.php";
+                
 include "header.php";
 ?>
 
 <div class="container">
 <?php
-                // Connect to database
-                include "server.php";
+// Connect to database
+               
                 
                 // $conn = mysqli_connect("localhost", "root", "", "my");
 
@@ -46,8 +48,8 @@ include "header.php";
                     echo '<label for="qty">Quantity</label>';
                     echo '<input class="form-control" placeholder="Quantity" type="number" style="width:50%; margin-left:135px;">';
                     // echo '<p class="price">&#8358;' . $row['price'] . '</p>';
-                    echo '<a href="#" class="btn btn-secondary mt-3">Add to Cart</a>';
-                    echo '<a href="#" class="btn btn-warning mt-3 ml-3">Order Now</a>';
+                    echo '<a href="view_product.php?cart='.$row["id"].'&id='.$row["id"].'" class="btn btn-secondary mt-3">Add to Cart</a>';
+                    echo '<a href="view_product.php?order='.$row["id"].'&id='.$row["id"].'" class="btn btn-warning mt-3 ml-3">Order Now</a>';
                     echo '</div>';
                     
                 }

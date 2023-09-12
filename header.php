@@ -1,3 +1,17 @@
+<?php
+$order = "";
+include "server.php";
+session_start();
+if(isset($_GET['order'])){
+    // if(isset($_SESSION['logged'])){
+    $id = $_GET['id']; 
+    $order = true;
+// }else{
+//     header("Location: ../");
+// }
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +41,13 @@
                 <div class="col-md-6" style="padding-left:350px;">
                     <ul>
                     <li><a href="#" class="col-md-3"><i class="las la-shopping-cart" style="font-size: 32px;position:relative"><sup style="font-size:16px;position:absolute; top:0; right:0;color:gold;">0</sup></i></a></li>
+                    <?php 
+                        if($order==true){
+                    ?>
+                    <li><a href="profile.php" style="font-size: 28px;;"><i class="las la-user-circle"></i></a></li>
+                    <?php }else{ ?>
                     <li><a href="#" class="col-md-3"><i class="las la-lock" style="font-size: 22px;"></i>Login/Register</a></li>
+                    <?php } ?>
                     </ul>
                 </div>
             </div>
